@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.9.7'
+          python-version: '3.13'
   semgrep:
     needs: build
     runs-on: ubuntu-latest
@@ -79,7 +79,7 @@ jobs:
 
       - name: Run App
         run: |
-          python dsvpwa.py >> app.log &
+          python dsvpwa.py
           echo "Waiting for start..."
           sleep 20
           curl -v http://localhost:65413/ || true
@@ -99,14 +99,6 @@ jobs:
           rules_file_name: '.zap/rules.tsv'
           allow_issue_writing: false
           fail_action: false
-
-      - name: Upload Logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-logs
-          path: app.log
-          retention-days: 5
 
       - name: Upload ZAP Results
         if: always()
