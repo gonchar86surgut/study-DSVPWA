@@ -79,7 +79,8 @@ jobs:
 
       - name: Run App
         run: |
-          python dsvpwa.py >> app.log
+          docker build -t dsvpwa .
+          docker run --rm -it -p 127.0.0.1:65413:65413 dsvpwa
           echo "Waiting for start..."
           sleep 20
           curl -v http://localhost:65413/ || true
